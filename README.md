@@ -1,0 +1,1 @@
+Ce programme contient une implémentation du jeu qawale ainsi qu'un ordinateur à ce jeu. Il utilise l'algorithme alpha-bêta avec une heuristique comptant le nombre de galets visibles ainsi que les alignements.
