@@ -140,39 +140,47 @@ let est_final p =
     if p.plateau.(i).(0) <> [] then begin
       let j = ref 1 in
       let c = List.hd p.plateau.(i).(0) in
-      while !j <> n && p.plateau.(i).(!j) <> [] && List.hd p.plateau.(i).(!j) = c do
-        incr j
-      done;
-      if !j = n then 
-        vic.((-c + 1) / 2) <- true 
+      if c <> 0 then begin
+        while !j <> n && p.plateau.(i).(!j) <> [] && List.hd p.plateau.(i).(!j) = c do
+          incr j
+        done;
+        if !j = n then 
+          vic.((-c + 1) / 2) <- true
+      end
     end
   done;
   for j = 0 to n - 1 do
     if p.plateau.(0).(j) <> [] then begin
       let i = ref 1 in
       let c = List.hd p.plateau.(0).(j) in
-      while !i <> n && p.plateau.(!i).(j) <> [] && List.hd p.plateau.(!i).(j) = c do
-        incr i
-      done;
-      if !i = n then 
-        vic.((-c + 1) / 2) <- true 
+      if c <> 0 then begin
+        while !i <> n && p.plateau.(!i).(j) <> [] && List.hd p.plateau.(!i).(j) = c do
+          incr i
+        done;
+        if !i = n then 
+          vic.((-c + 1) / 2) <- true
+      end
     end
   done;
   if p.plateau.(0).(0) <> [] then begin
     let i = ref 1 in
     let c = List.hd p.plateau.(0).(0) in
-    while !i <> n && p.plateau.(!i).(!i) <> [] && List.hd p.plateau.(!i).(!i) = c do
-      incr i
-    done;
-    if !i = n then vic.((-c + 1) / 2) <- true 
+    if c <> 0 then begin
+      while !i <> n && p.plateau.(!i).(!i) <> [] && List.hd p.plateau.(!i).(!i) = c do
+        incr i
+      done;
+      if !i = n then vic.((-c + 1) / 2) <- true 
+    end
   end;
   if p.plateau.(n - 1).(0) <> [] then begin
     let i = ref 1 in
     let c = List.hd p.plateau.(n - 1).(0) in
+    if c <> 0 then begin
     while !i <> n && p.plateau.(n - 1 - !i).(!i) <> [] && List.hd p.plateau.(n - 1 - !i).(!i) = c do
       incr i
     done;
-    if !i = n then vic.((-c + 1) / 2) <- true 
+    if !i = n then vic.((-c + 1) / 2) <- true
+    end
   end;
   if vic.(0) && vic.(1) then (true, 0)
   else if vic.(0) then (true, max_int)
