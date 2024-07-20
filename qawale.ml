@@ -183,16 +183,17 @@ let est_final p =
     end
   end;
   if vic.(0) && vic.(1) then (true, 0)
-  else if vic.(0) then (true, max_int)
-  else if vic.(1) then (true, min_int)
+  else if vic.(0) then (true, max_int / 3 + p.galets_restants)
+  else if vic.(1) then (true, min_int / 3 - p.galets_restants)
   else (false, 0)
 
 let rec evaluation dic p profondeur a b = 
   if Hashtbl.mem dic p then Hashtbl.find dic p else begin
   let (final, eval) = est_final p in
   if final then begin 
-    Hashtbl.add dic p (p.tour * (eval / (p.galets_restants + 1)));
-    p.tour * (eval / (p.galets_restants + 1))
+    let v = p.tour * eval in
+    Hashtbl.add dic p v;
+    v
   end
   else if profondeur = 0 || p.galets_restants = 0 then begin
     let v = p.tour * heuristique p in
@@ -244,7 +245,7 @@ let partie profondeur =
   done;
   let score = snd (est_final !p) in
   if score = 0 then print_string "égalité\n"
-  else if score = max_int then print_string "victoire rouge\n"
+  else if score > 0 then print_string "victoire rouge\n"
   else print_string "victoire blanc\n"
 
 let () = partie 3
